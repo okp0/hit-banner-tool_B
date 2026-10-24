@@ -11,7 +11,7 @@
 <body class="bg-amber-50 p-6">
   
   <div class="max-w-6xl mx-auto bg-white rounded-2xl shadow-xl p-8 border-2 border-amber-200">
-    <!-- タイトル + ログアウトボタン -->
+    <!-- タイトル -->
     <div class="flex justify-between items-center mb-8 pb-4 border-b border-amber-100">
       <div class="flex items-center gap-3">
         <span class="text-4xl">🎯</span>
@@ -45,28 +45,28 @@
         <div>
           <label class="block text-sm mb-1 font-medium text-amber-900">キャラクター選択 (Ｕトラ等)</label>
           <select id="character" class="w-full border border-amber-300 p-3 rounded-lg bg-amber-50/50 focus:outline-none focus:ring-2 focus:ring-amber-500">
-            <option value="ico_tra_ishii" selected>石井代表</option>
-            <option value="ico_tra_kenta" selected>マンダケンタ</option>
-            <option value="ico_tra_t" selected>Ｔトラ</option>
-            <option value="ico_tra_j" selected>Ｊトラ</option>
-            <option value="ico_tra_z" selected>Ｚトラ</option>
-            <option value="ico_tra_e" selected>Ｅトラ</option>
-            <option value="ico_tra_h" selected>Ｈトラ</option>
-            <option value="ico_tra_n" selected>Ｎトラ</option>
+            <option value="ico_tra_ishii">石井代表</option>
+            <option value="ico_tra_kenta">マンダケンタ</option>
+            <option value="ico_tra_t">Ｔトラ</option>
+            <option value="ico_tra_j">Ｊトラ</option>
+            <option value="ico_tra_z">Ｚトラ</option>
+            <option value="ico_tra_e">Ｅトラ</option>
+            <option value="ico_tra_h">Ｈトラ</option>
+            <option value="ico_tra_n">Ｎトラ</option>
             <option value="ico_tra_u" selected>Ｕトラ</option>
-            <option value="ico_tra_o" selected>Ｏトラ</option>
-            <option value="ico_tra_y" selected>Ｙトラ</option>
-            <option value="ico_tra_m" selected>Ｍトラ</option>
-            <option value="ico_tra_c" selected>Ｃトラ</option>
-            <option value="ico_tra_k" selected>Ｋトラ</option>
-            <option value="ico_tra_santa" selected>Mr.サンタ</option>
-            <option value="ico_tra_w" selected>Ｗトラ</option>
-            <option value="ico_tra_x" selected>Ｘトラ</option>
-            <option value="ico_tra_kuromaku" selected>黒幕</option>
-            <option value="ico_tra_ouji" selected>暴露王子</option>
-            <option value="ico_tra_local" selected>チームトゥインクル</option>
-            <option value="ico_tra_hokkaido" selected>チーム北海道</option>
-            <option value="ico_bakuro" selected>参加者限定</option>
+            <option value="ico_tra_o">Ｏトラ</option>
+            <option value="ico_tra_y">Ｙトラ</option>
+            <option value="ico_tra_m">Ｍトラ</option>
+            <option value="ico_tra_c">Ｃトラ</option>
+            <option value="ico_tra_k">Ｋトラ</option>
+            <option value="ico_tra_santa">Mr.サンタ</option>
+            <option value="ico_tra_w">Ｗトラ</option>
+            <option value="ico_tra_x">Ｘトラ</option>
+            <option value="ico_tra_kuromaku">黒幕</option>
+            <option value="ico_tra_ouji">暴露王子</option>
+            <option value="ico_tra_local">チームトゥインクル</option>
+            <option value="ico_tra_hokkaido">チーム北海道</option>
+            <option value="ico_bakuro">参加者限定</option>
           </select>
         </div>
 
@@ -123,6 +123,31 @@
       "ico_bakuro": "参加者限定"
     };
 
+    const charPathMap = {
+      "ico_tra_ishii": "ishii",
+      "ico_tra_kenta": "kenta",
+      "ico_tra_t": "t",
+      "ico_tra_j": "j",
+      "ico_tra_z": "z",
+      "ico_tra_e": "e",
+      "ico_tra_h": "h",
+      "ico_tra_n": "n",
+      "ico_tra_u": "u",
+      "ico_tra_o": "o",
+      "ico_tra_y": "y",
+      "ico_tra_m": "m",
+      "ico_tra_c": "c",
+      "ico_tra_k": "k",
+      "ico_tra_santa": "santa",
+      "ico_tra_w": "w",
+      "ico_tra_x": "x",
+      "ico_tra_kuromaku": "kuromaku",
+      "ico_tra_ouji": "ouji",
+      "ico_tra_local": "local",
+      "ico_tra_hokkaido": "hokkaido",
+      "ico_bakuro": "" // 参加者限定の時はリンクなし
+    };
+
     function toHalfWidth(str) {
       if (!str) return "";
       return str.replace(/[０-９Ａ-Ｚａ-ｚ（）]/g, function(s) {
@@ -155,6 +180,7 @@
       const gradedName = document.getElementById('gradedName')?.value.trim() || "";
       
       const charDisplayName = charNameMap[charKey] || "Uトラ";
+      const charPath = charPathMap[charKey];
       
       let dateLine = "";
       let raceTitleLine = "";
@@ -261,7 +287,15 @@
       
       let payoutHTML = payoutHtmlParts.join("");
 
-      const result = `<!-- 的中一つ分ここから --><div class="swiper-slide hit"><div class="hit-s__header"><ul class="ac-staffs"><li><a href="/trackman/u/" class="ac-staffs__wrap trig-colorbox_iframe"><div class="ac-staffs_ico"><img src="<?php echo $cache_url; ?>/img/main/${charKey}.png?<?php echo CommonString::filemtime($_SERVER['DOCUMENT_ROOT']. "/img/main/${charKey}.png"); ?>" alt=""></div>${charDisplayName}</a></li></ul></div><!--hit-s__header --><ul class="hit-s__detailWrap"><li><span class="hit-s__race">${formattedDate}</span>${horseHtmlStr}</li>
+      // スタッフ部分のHTML生成（ico_bakuroの時はリンクなし）
+      let staffHtml = "";
+      if (charPath === "") {
+        staffHtml = `<div class="ac-staffs_ico"><img src="<?php echo $cache_url; ?>/img/main/${charKey}.png?<?php echo CommonString::filemtime($_SERVER['DOCUMENT_ROOT']. "/img/main/${charKey}.png"); ?>" alt=""></div>${charDisplayName}`;
+      } else {
+        staffHtml = `<a href="/trackman/${charPath}/" class="ac-staffs__wrap trig-colorbox_iframe"><div class="ac-staffs_ico"><img src="<?php echo $cache_url; ?>/img/main/${charKey}.png?<?php echo CommonString::filemtime($_SERVER['DOCUMENT_ROOT']. "/img/main/${charKey}.png"); ?>" alt=""></div>${charDisplayName}</a>`;
+      }
+
+      const result = `<!-- 的中一つ分ここから --><div class="swiper-slide hit"><div class="hit-s__header"><ul class="ac-staffs"><li>${staffHtml}</li></ul></div><!--hit-s__header --><ul class="hit-s__detailWrap"><li><span class="hit-s__race">${formattedDate}</span>${horseHtmlStr}</li>
 <li class="hit-s__amount">${payoutHTML}</li><li><span class="hit-s__miniTtl">情報</span><br>${customInfo}</li></ul></div><!-- 的中一つ分ここまで -->`;
 
       document.getElementById('output').textContent = result;
